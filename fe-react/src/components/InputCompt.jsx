@@ -56,7 +56,7 @@ export const SelectEditCompt = ({ title, options, onChange, value }) => {
             >
                 {options?.map((d, i) => (
                     <option key={i} value={d.id}>
-                        {d.id} {d?.name}
+                        {d?.name}
                     </option>
                 ))}
             </select>

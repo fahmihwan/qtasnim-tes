@@ -21,29 +21,23 @@ const Edit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({
+
+        setIsSubmitting(true);
+        DetailItemService.update(params?.id, {
             item_id: itemId,
-            category_id: categoryId,
+            category_id: itemId,
             stock: stock,
             sales_qty: salesQty,
             transaction_date: transactionDate,
-        });
-        // setIsSubmitting(true);
-        // DetailItemService.create({
-        //     item_id: itemId,
-        //     category_id: itemId,
-        //     stock: stock,
-        //     sales_qty: salesQty,
-        //     transaction_date: transactionDate,
-        // })
-        //     .then((res) => {
-        //         navigate("/");
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         setIsSubmitting(false);
-        //     });
+        })
+            .then((res) => {
+                navigate("/transaction");
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsSubmitting(false);
+            });
     };
     const fetchItem = async () => {
         try {
@@ -64,24 +58,17 @@ const Edit = () => {
         }
     };
     const fetDetail = async () => {
-        // await fetchItem()
-        //     .then((res) => setListItem(res?.data?.data))
-        //     .catch((err) => console.log(err));
-        // await fetchCategory()
-        //     .then((res) => setListCategory(res?.data?.data))
-        //     .catch((err) => console.log(err));
         await fetchItem();
         await fetchCategory();
         await DetailItemService.findByid(params?.id)
             .then((res) => {
                 let data = res?.data?.data;
-                console.log(data);
+
                 setCategoryId(data?.category_id);
                 setItemId(data?.item_id);
                 setStock(data?.stock);
                 setSalesQty(data?.sales_qty);
                 setTransactionDate(data?.transaction_date);
-                // setCategory(res?.data?.data?.category_name);
             })
             .catch((err) => console.log(err));
     };
