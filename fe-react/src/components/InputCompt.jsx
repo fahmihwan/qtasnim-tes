@@ -50,7 +50,7 @@ export const SelectEditCompt = ({ title, options, onChange, value }) => {
             </label>
             <select
                 className="select select-bordered w-full "
-                defaultValue={value}
+                value={value}
                 onChange={onChange}
                 required={true}
             >

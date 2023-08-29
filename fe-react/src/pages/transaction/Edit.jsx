@@ -11,21 +11,21 @@ const Edit = () => {
     const navigate = useNavigate();
     const [listItem, setListItem] = useState([]);
     const [listCategory, setListCategory] = useState([]);
-    const [itemId, setItemId] = useState(null);
-    const [categoryId, setCategoryId] = useState(null);
+    const [itemId, setItemId] = useState("");
+    const [categoryId, setCategoryId] = useState("");
     const [stock, setStock] = useState("");
     const [salesQty, setSalesQty] = useState("");
     const [transactionDate, setTransactionDate] = useState("");
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         setIsSubmitting(true);
         DetailItemService.update(params?.id, {
             item_id: itemId,
-            category_id: itemId,
+            category_id: categoryId,
             stock: stock,
             sales_qty: salesQty,
             transaction_date: transactionDate,
@@ -52,7 +52,6 @@ const Edit = () => {
         try {
             const response = await CategoryService.getAllList();
             setListCategory(response?.data?.data);
-            // setCategoryId(response.data.data?.id);
         } catch (error) {
             console.log(error);
         }
@@ -63,7 +62,6 @@ const Edit = () => {
         await DetailItemService.findByid(params?.id)
             .then((res) => {
                 let data = res?.data?.data;
-
                 setCategoryId(data?.category_id);
                 setItemId(data?.item_id);
                 setStock(data?.stock);
